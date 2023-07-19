@@ -4,6 +4,8 @@ require "includes/_head.php";
 require "vendor/autoload.php";
 require "includes/_database.php";
 require "includes/_functions.php";
+$_SESSION['token'] = md5(uniqid(mt_rand(), true));
+var_dump($_POST);
 
 //------------------------------------------------------------------
 //REQUEST TO GET DYNAMIC EXPENSES & INCOME OF THE MONTH LIST FROM DB
@@ -21,20 +23,17 @@ $transactions = $query->fetchAll();
 //REQUEST TO GET THE AMOUNT OF MONEY STILL ON THE ACCOUNT 
 //--------------------------------------------------------
 
-$query = $dbCo->prepare("SELECT SUM(`amount`) as total_account FROM `transaction` WHERE date_transaction LIKE '2023-07%'");
+$query = $dbCo->prepare("SELECT SUM(`amount`) as total_account FROM `transaction`");
 $query->execute();
 $amount = $query->fetch();
 
 ?>
 
-    <ul>
-    <?php
-    ?>
-    </ul>
-    <div class="container-fluid">
-        <header class="row flex-wrap justify-content-between align-items-center p-3 mb-4 border-bottom">
-        <a href="index.php" class="col-1">
 
+<div class="container-fluid">
+        <header class="row flex-wrap justify-content-between align-items-center p-3 mb-4 border-bottom">
+            <a href="index.php" class="col-1">
+                
                 <i class="bi bi-piggy-bank-fill text-primary fs-1"></i>
             </a>
             <nav class="col-11 col-md-7">
@@ -56,7 +55,7 @@ $amount = $query->fetch();
             <form action="" class="col-12 col-md-4" role="search">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Rechercher..."
-                        aria-describedby="button-search">
+                    aria-describedby="button-search">
                     <button class="btn btn-primary" type="submit" id="button-search">
                         <i class="bi bi-search"></i>
                     </button>
@@ -64,7 +63,8 @@ $amount = $query->fetch();
             </form>
         </header>
     </div>
-
+    
+    <?= displayMsg($msg)?>
     <div class="container">
         <section class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">

@@ -1,12 +1,8 @@
 <?php
-
 require "includes/_head.php";
 require "includes/_database.php";
 require "includes/_functions.php";
-
-session_start();
-$_SESSION['token'] = md5(uniqid(mt_rand(), true));
-
+var_dump($_POST);
 ?>
 
     <div class="container-fluid">
@@ -33,7 +29,7 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
             <form action="" class="col-12 col-md-4" role="search">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Rechercher..."
-                        aria-describedby="button-search">
+                    aria-describedby="button-search">
                     <button class="btn btn-primary" type="submit" id="button-search">
                         <i class="bi bi-search"></i>
                     </button>
@@ -41,14 +37,15 @@ $_SESSION['token'] = md5(uniqid(mt_rand(), true));
             </form>
         </header>
     </div>
-
+    <?= displayMsg($msg)?>
+    
     <div class="container">
         <section class="card mb-4 rounded-3 shadow-sm">
             <div class="card-header py-3">
                 <h1 class="my-0 fw-normal fs-4">Ajouter une opération</h1>
             </div>
             <div class="card-body">
-                <form action="action.php" method="post">
+                <form action="actionadd.php" method="post">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nom de l'opération *</label>
                         <input type="text" class="form-control" name="name" id="name"

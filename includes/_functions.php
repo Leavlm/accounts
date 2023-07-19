@@ -1,16 +1,29 @@
 <?php
+session_start();
 require 'includes/_database.php';
 
 
+//---------------------------
+// ERROR OR CONFIRMATION MSG
+//---------------------------
+
 $msg = [
-    'transAdd' => 'Votre transaction a bien été ajouté.',
-    'transFail' => 'L\'ajout de votre transaction a échoué'
+    'transSuccess' => 'Votre transaction a bien été ajouté.',
+    'transFail' => 'L\'ajout de votre transaction a échoué',
+    'tokenFail' => 'Le token est inconnu'
 ];
 
 function displayMsg(array $array):string{
     $msgReceived = $_GET['msg'] ?? '';
     if (array_key_exists($msgReceived, $array)) {
-        return $array[$msgReceived];
+        $html = '<div class="alert ';
+        if(str_contains($msgReceived, 'Success')){
+           $html .= 'alert-success"';
+        }
+        if(str_contains($msgReceived, 'Fail')){
+           $html .= 'alert-danger"';
+        }
+        return $html .= ' role="alert">'.$array[$msgReceived].'</div>';
     }
     return '';
 }
@@ -22,8 +35,8 @@ function displayMsg(array $array):string{
 
 function verifyToken()
 {
-    if (!array_key_exists('myToken', $_SESSION) || !array_key_exists('token', $_REQUEST) || $_SESSION['myToken'] !== $_REQUEST['token']) {
-        header('location: index.php?msg=wrongToken');
+    if (!array_key_exists('token', $_SESSION) || !array_key_exists('token', $_POST) || $_SESSION['token'] !== $_POST['token']) {
+        header('location: add.php?msg=tokenFail');
         exit;
     }
 };
@@ -73,6 +86,7 @@ function getList(array $array): string
                                 </span>
                             </td>
                             <td class="text-end text-nowrap">
+                            <form >
                                 <a href="#" class="btn btn-outline-primary btn-sm rounded-circle">
                                     <i class="bi bi-pencil"></i>
                                 </a>

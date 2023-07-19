@@ -5,12 +5,12 @@ require "includes/_functions.php";
 
 verifyToken();
 
-$query = $dbCo->prepare("INSERT INTO `transaction` (name, date_transaction, amount, id_category) VALUES (:name, :date_transaction, :amount, :id_category)");
+$query = $dbCo->prepare("INSERT INTO `transaction` (name, date_transaction, amount, id_category) VALUES (:name, :date, :amount, :id_category)");
 $isOK = $query->execute([
-    'name' => htmlspecialchars($_POST['name']),
-    'date_transaction' => htmlspecialchars($_POST['date']),
-    'amount' => floatval(htmlspecialchars($_POST['amount'])),
-    'id_category' => $_POST['category']
+    'name' => htmlspecialchars($_REQUEST['name']),
+    'date' => htmlspecialchars($_REQUEST['date']),
+    'amount' => floatval(htmlspecialchars($_REQUEST['amount'])),
+    'id_category' => $_REQUEST['category']
 ]);
 header('location: index.php?msg='.($isOK ? 'transSuccess' : 'transFail'));
 exit;

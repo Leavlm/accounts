@@ -63,7 +63,7 @@ $transaction = $query->fetch();
             <h1 class="my-0 fw-normal fs-4">Modifier une opération</h1>
         </div>
         <div class="card-body">
-            <form action="actionmodify.php" method="post">
+            <form action="actionmodify.php?id=<?=intval($id)?>" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom de l'opération *</label>
                     <input type="text" class="form-control" name="name" id="name" value="<?= $transaction['name'] ?>">

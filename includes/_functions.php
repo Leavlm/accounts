@@ -1,6 +1,24 @@
 <?php
-
 require 'includes/_database.php';
+
+
+$msg = [
+    'transAdd' => 'Votre transaction a bien été ajouté.',
+    'transFail' => 'L\'ajout de votre transaction a échoué'
+];
+
+function displayMsg(array $array):string{
+    $msgReceived = $_GET['msg'] ?? '';
+    if (array_key_exists($msgReceived, $array)) {
+        return $array[$msgReceived];
+    }
+    return '';
+}
+
+
+//---------
+//SECURITY
+//---------
 
 function verifyToken()
 {

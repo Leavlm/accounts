@@ -12,7 +12,8 @@ require "includes/_functions.php";
 $query = $dbCo->prepare("SELECT `name`, `amount`, `date_transaction`, `transaction`.`id_category`  AS id_transac, `category`.`id_category` AS id_cat, `icon_class`
                         FROM `transaction` 
                         LEFT JOIN `category` ON `transaction`.`id_category` = `category`.`id_category`
-                        WHERE date_transaction LIKE '2023-07%'");
+                        WHERE date_transaction LIKE '2023-07%'
+                        ORDER BY date_transaction DESC");
 $query->execute();
 $transactions = $query->fetchAll();
 
@@ -251,7 +252,7 @@ $amount = $query->fetch();
     </div>
 
     <div class="position-fixed bottom-0 end-0 m-3">
-        <a href="add.html" class="btn btn-primary btn-lg rounded-circle">
+        <a href="add.php" class="btn btn-primary btn-lg rounded-circle">
             <i class="bi bi-plus fs-1"></i>
         </a>
     </div>

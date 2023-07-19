@@ -1,20 +1,40 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opérations de Juillet 2023 - Mes Comptes</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-</head>
+require "includes/_head.php";
+require "vendor/autoload.php";
+require "includes/_database.php";
+require "includes/_functions.php";
 
-<body>
+//------------------------------------------------------------------
+//REQUEST TO GET DYNAMIC EXPENSES & INCOME OF THE MONTH LIST FROM DB
+//------------------------------------------------------------------
 
+$query = $dbCo->prepare("SELECT `name`, `amount`, `date_transaction`, `transaction`.`id_category`  AS id_transac, `category`.`id_category` AS id_cat, `icon_class`
+                        FROM `transaction` 
+                        LEFT JOIN `category` ON `transaction`.`id_category` = `category`.`id_category`
+                        WHERE date_transaction LIKE '2023-07%'");
+$query->execute();
+$transactions = $query->fetchAll();
+
+//--------------------------------------------------------
+//REQUEST TO GET THE AMOUNT OF MONEY STILL ON THE ACCOUNT 
+//--------------------------------------------------------
+
+$query = $dbCo->prepare("SELECT SUM(`amount`) as total_account FROM `transaction` WHERE date_transaction LIKE '2023-07%'");
+$query->execute();
+$amount = $query->fetch();
+var_dump($amount)
+
+?>
+
+    <ul>
+    <?php
+    ?>
+    </ul>
     <div class="container-fluid">
         <header class="row flex-wrap justify-content-between align-items-center p-3 mb-4 border-bottom">
-            <a href="index.html" class="col-1">
+        <a href="index.php" class="col-1">
+
                 <i class="bi bi-piggy-bank-fill text-primary fs-1"></i>
             </a>
             <nav class="col-11 col-md-7">
@@ -52,6 +72,7 @@
             </div>
             <div class="card-body">
                 <p class="card-title pricing-card-title text-center fs-1">625,34 €</p>
+                <!-- <p class="card-title pricing-card-title text-center fs-1">625,34 €</p> -->
             </div>
         </section>
 
@@ -69,7 +90,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <?= getList($transactions)?>
+                       <!-- <tr>
                             <td width="50" class="ps-3">
                             </td>
                             <td>
@@ -90,7 +112,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <tr>
+                         <tr>
                             <td width="50" class="ps-3">
                                 <i class="bi bi-car-front fs-3"></i>
                             </td>
@@ -198,7 +220,7 @@
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -214,7 +236,7 @@
                             <span class="page-link">Juillet 2023</span>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="index.html">Juin 2023</a>
+                            <a class="page-link" href="index.php">Juin 2023</a>
                         </li>
                         <li class="page-item">
                             <span class="page-link">...</span>

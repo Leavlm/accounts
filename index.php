@@ -5,13 +5,12 @@ require "vendor/autoload.php";
 require "includes/_database.php";
 require "includes/_functions.php";
 $_SESSION['token'] = md5(uniqid(mt_rand(), true));
-var_dump($_POST);
 
 //------------------------------------------------------------------
 //REQUEST TO GET DYNAMIC EXPENSES & INCOME OF THE MONTH LIST FROM DB
 //------------------------------------------------------------------
 
-$query = $dbCo->prepare("SELECT `name`, `amount`, `date_transaction`, `transaction`.`id_category`  AS id_transac, `category`.`id_category` AS id_cat, `icon_class`
+$query = $dbCo->prepare("SELECT `name`, `amount`, `date_transaction`, `id_transaction`, `transaction`.`id_category`  AS id_transac, `category`.`id_category` AS id_cat, `icon_class`
                         FROM `transaction` 
                         LEFT JOIN `category` ON `transaction`.`id_category` = `category`.`id_category`
                         WHERE date_transaction LIKE '2023-07%'

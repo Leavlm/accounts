@@ -10,7 +10,9 @@ require 'includes/_database.php';
 $msg = [
     'transSuccess' => 'Votre transaction a bien été ajouté.',
     'transFail' => 'L\'ajout de votre transaction a échoué',
-    'tokenFail' => 'Le token est inconnu'
+    'tokenFail' => 'Le token est inconnu',
+    'modifSuccess' => 'Votre transaction a bien été modifiée',
+    'modifFail' => 'Votre transaction n\'a pas pu être modifiée'
 ];
 
 function displayMsg(array $array):string{
@@ -65,6 +67,7 @@ function getList(array $array): string
         $idCat = $row['id_cat'];
         $idTransac = $row['id_transac'];
         $icnClass = $row['icon_class'];
+        $id = $row['id_transaction'];
 
         $html .= '<tr>
                             <td width="50" class="ps-3">';
@@ -86,10 +89,10 @@ function getList(array $array): string
                                 </span>
                             </td>
                             <td class="text-end text-nowrap">
-                            <form >
-                                <a href="#" class="btn btn-outline-primary btn-sm rounded-circle">
+                            <a href="modify.php?id='.$id.'" class="btn btn-outline-primary btn-sm rounded-circle">
                                     <i class="bi bi-pencil"></i>
                                 </a>
+                            </form>
                                 <a href="#" class="btn btn-outline-danger btn-sm rounded-circle">
                                     <i class="bi bi-trash"></i>
                                 </a>

@@ -23,7 +23,6 @@ $transactions = $query->fetchAll();
 $query = $dbCo->prepare("SELECT SUM(`amount`) as total_account FROM `transaction` WHERE date_transaction LIKE '2023-07%'");
 $query->execute();
 $amount = $query->fetch();
-var_dump($amount)
 
 ?>
 
@@ -71,8 +70,7 @@ var_dump($amount)
                 <h2 class="my-0 fw-normal fs-4">Solde aujourd'hui</h2>
             </div>
             <div class="card-body">
-                <p class="card-title pricing-card-title text-center fs-1">625,34 €</p>
-                <!-- <p class="card-title pricing-card-title text-center fs-1">625,34 €</p> -->
+                <p class="card-title pricing-card-title text-center fs-1"><?= $amount['total_account']?></p>
             </div>
         </section>
 

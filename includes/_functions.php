@@ -65,6 +65,5 @@ function getList(array $array): string
                         </tr>';
     }
     return $html;
-}
+};
 
-getAmount

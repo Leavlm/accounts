@@ -12,7 +12,9 @@ $msg = [
     'transFail' => 'L\'ajout de votre transaction a échoué',
     'tokenFail' => 'Le token est inconnu',
     'modifSuccess' => 'Votre transaction a bien été modifiée',
-    'modifFail' => 'Votre transaction n\'a pas pu être modifiée'
+    'modifFail' => 'Votre transaction n\'a pas pu être modifiée',
+    'deleteSuccess' => 'Votre suppression a bien été effectuée',
+    'deleteFail' => 'Il est impossible de supprimer cette transaction'
 ];
 
 function displayMsg(array $array):string{
@@ -93,7 +95,7 @@ function getList(array $array): string
                                     <i class="bi bi-pencil"></i>
                                 </a>
                             </form>
-                                <a href="#" class="btn btn-outline-danger btn-sm rounded-circle">
+                                <a href="actiondelete.php?id='.$id.'" class="btn btn-outline-danger btn-sm rounded-circle">
                                     <i class="bi bi-trash"></i>
                                 </a>
                             </td>
